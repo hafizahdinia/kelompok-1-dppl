@@ -15,5 +15,5 @@ jobs:
           git config user.email "github-actions@github.com"
           echo "Update from workflow" >> log.txt
           git add .
-          git commit -m "Automated update"
+          git commit -m "Automated update" || echo "No changes to commit"
           git push
