@@ -11,6 +11,6 @@ package edu.praktikumpbo.tugaskelompok1;
 public class TugasKelompok1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("tes");
     }
 }
