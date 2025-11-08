@@ -38,7 +38,7 @@ public class LoginPagePanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(188, 237, 90));
         setPreferredSize(new java.awt.Dimension(240, 300));
 
-        loginLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        loginLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         loginLabel.setForeground(new java.awt.Color(39, 67, 32));
         loginLabel.setText("Login");
 
@@ -134,7 +134,7 @@ public class LoginPagePanel extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

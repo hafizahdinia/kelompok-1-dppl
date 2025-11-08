@@ -37,7 +37,7 @@ public class DashboardPengajuPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(245, 255, 251));
 
-        loginLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        loginLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         loginLabel.setForeground(new java.awt.Color(39, 67, 32));
         loginLabel.setText("Dashboard");
 
@@ -129,7 +129,7 @@ public class DashboardPengajuPanel extends javax.swing.JPanel {
                     .addComponent(buatAjuanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lihatRiwayatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lihatKalenderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
