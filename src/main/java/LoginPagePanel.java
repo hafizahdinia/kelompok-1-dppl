@@ -7,12 +7,12 @@
  *
  * @author Lenovo
  */
-public class MainPagePanel extends javax.swing.JPanel {
+public class LoginPagePanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MainPagePanel
      */
-    public MainPagePanel() {
+    public LoginPagePanel() {
         initComponents();
     }
 
@@ -43,17 +43,17 @@ public class MainPagePanel extends javax.swing.JPanel {
         loginLabel.setText("Login");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(39, 67, 32));
+        jLabel2.setForeground(new java.awt.Color(167, 81, 66));
         jLabel2.setText("Daftar akun tamu");
 
         jPanel1.setBackground(new java.awt.Color(245, 255, 251));
         jPanel1.setForeground(new java.awt.Color(188, 237, 90));
 
-        emailLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        emailLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         emailLabel.setForeground(new java.awt.Color(39, 67, 32));
         emailLabel.setText("Email");
 
-        passwordLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        passwordLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         passwordLabel.setForeground(new java.awt.Color(39, 67, 32));
         passwordLabel.setText("Password");
 
@@ -69,7 +69,7 @@ public class MainPagePanel extends javax.swing.JPanel {
         loginButton.setText("Login");
 
         resetLabel.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        resetLabel.setForeground(new java.awt.Color(39, 67, 32));
+        resetLabel.setForeground(new java.awt.Color(167, 81, 66));
         resetLabel.setText("Lupa password?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -105,7 +105,7 @@ public class MainPagePanel extends javax.swing.JPanel {
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(resetLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(loginButton)
                 .addContainerGap())
         );
@@ -115,11 +115,11 @@ public class MainPagePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(loginLabel)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -134,7 +134,7 @@ public class MainPagePanel extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
