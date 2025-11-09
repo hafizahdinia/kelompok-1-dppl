@@ -26,219 +26,64 @@ public class KalenderPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         loginLabel = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        judulDashboardLabel = new javax.swing.JLabel();
-        subjudulPengajuanLabel1 = new javax.swing.JLabel();
-        subjudulPengajuanLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        judulDashboardLabel1 = new javax.swing.JLabel();
-        subjudulPengajuanLabel3 = new javax.swing.JLabel();
-        subjudulPengajuanLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        judulDashboardLabel2 = new javax.swing.JLabel();
-        subjudulPengajuanLabel5 = new javax.swing.JLabel();
-        subjudulPengajuanLabel6 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        judulDashboardLabel3 = new javax.swing.JLabel();
-        subjudulPengajuanLabel7 = new javax.swing.JLabel();
-        subjudulPengajuanLabel8 = new javax.swing.JLabel();
+        judulDashboardLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(245, 255, 251));
 
         loginLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         loginLabel.setForeground(new java.awt.Color(39, 67, 32));
-        loginLabel.setText("Riwayat Ajuan");
+        loginLabel.setText("Kalender Penggunaan Aula");
 
-        jComboBox1.setBackground(new java.awt.Color(245, 255, 251));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dari Terbaru", "Dari Terlama" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Dalam Proses", "Diterima", "Ditolak", "Dibatalkan" }));
-
-        jPanel1.setBackground(new java.awt.Color(245, 255, 251));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(167, 81, 66), 1, true));
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.setPreferredSize(new java.awt.Dimension(210, 100));
-
-        judulDashboardLabel.setBackground(new java.awt.Color(245, 255, 251));
-        judulDashboardLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        judulDashboardLabel.setForeground(new java.awt.Color(39, 67, 32));
-        judulDashboardLabel.setText("17 Agustus XXXX - Aula X ");
-
-        subjudulPengajuanLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        subjudulPengajuanLabel1.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel1.setForeground(new java.awt.Color(39, 67, 32));
-        subjudulPengajuanLabel1.setText("Jam     : XX:XX--XX:XX WIB");
-
-        subjudulPengajuanLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        subjudulPengajuanLabel2.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel2.setForeground(new java.awt.Color(39, 67, 32));
-        subjudulPengajuanLabel2.setText("Status : Menunggu verifikasi administrator");
-
-        jButton1.setBackground(new java.awt.Color(167, 81, 66));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(245, 255, 251));
-        jButton1.setText("Batalkan Ajuan");
+        jPanel1.setBackground(new java.awt.Color(188, 237, 90));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(judulDashboardLabel)
-                            .addComponent(subjudulPengajuanLabel1)
-                            .addComponent(subjudulPengajuanLabel2))
-                        .addGap(0, 50, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(judulDashboardLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+            .addGap(0, 29, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(188, 237, 90));
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel2.setPreferredSize(new java.awt.Dimension(210, 100));
-
-        judulDashboardLabel1.setBackground(new java.awt.Color(245, 255, 251));
-        judulDashboardLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        judulDashboardLabel1.setForeground(new java.awt.Color(39, 67, 32));
-        judulDashboardLabel1.setText("17 Agustus XXXX - Aula X ");
-
-        subjudulPengajuanLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        subjudulPengajuanLabel3.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel3.setForeground(new java.awt.Color(39, 67, 32));
-        subjudulPengajuanLabel3.setText("Jam     : XX:XX--XX:XX WIB");
-
-        subjudulPengajuanLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        subjudulPengajuanLabel4.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel4.setForeground(new java.awt.Color(39, 67, 32));
-        subjudulPengajuanLabel4.setText("Status : Ajuan diterima administrator");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(judulDashboardLabel1)
-                    .addComponent(subjudulPengajuanLabel3)
-                    .addComponent(subjudulPengajuanLabel4))
-                .addContainerGap(58, Short.MAX_VALUE))
+            .addGap(0, 214, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(judulDashboardLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 165, Short.MAX_VALUE)
         );
 
-        jPanel3.setBackground(new java.awt.Color(39, 67, 32));
-        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel3.setPreferredSize(new java.awt.Dimension(210, 100));
+        jPanel3.setBackground(new java.awt.Color(245, 255, 251));
 
-        judulDashboardLabel2.setBackground(new java.awt.Color(245, 255, 251));
-        judulDashboardLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        judulDashboardLabel2.setForeground(new java.awt.Color(245, 255, 251));
-        judulDashboardLabel2.setText("17 Agustus XXXX - Aula X ");
-
-        subjudulPengajuanLabel5.setBackground(new java.awt.Color(245, 255, 251));
-        subjudulPengajuanLabel5.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel5.setForeground(new java.awt.Color(245, 255, 251));
-        subjudulPengajuanLabel5.setText("Jam     : XX:XX--XX:XX WIB");
-
-        subjudulPengajuanLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        subjudulPengajuanLabel6.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel6.setForeground(new java.awt.Color(245, 255, 251));
-        subjudulPengajuanLabel6.setText("Status : Ajuan dibatalkan");
+        judulDashboardLabel.setBackground(new java.awt.Color(167, 81, 66));
+        judulDashboardLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        judulDashboardLabel.setForeground(new java.awt.Color(167, 81, 66));
+        judulDashboardLabel.setText("Penggunaan Agustus 20XX");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(judulDashboardLabel2)
-                    .addComponent(subjudulPengajuanLabel5)
-                    .addComponent(subjudulPengajuanLabel6))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(judulDashboardLabel)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(judulDashboardLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel4.setBackground(new java.awt.Color(167, 81, 66));
-        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel4.setPreferredSize(new java.awt.Dimension(210, 100));
-
-        judulDashboardLabel3.setBackground(new java.awt.Color(245, 255, 251));
-        judulDashboardLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        judulDashboardLabel3.setForeground(new java.awt.Color(245, 255, 251));
-        judulDashboardLabel3.setText("17 Agustus XXXX - Aula X ");
-
-        subjudulPengajuanLabel7.setBackground(new java.awt.Color(245, 255, 251));
-        subjudulPengajuanLabel7.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel7.setForeground(new java.awt.Color(245, 255, 251));
-        subjudulPengajuanLabel7.setText("Jam     : XX:XX--XX:XX WIB");
-
-        subjudulPengajuanLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        subjudulPengajuanLabel8.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        subjudulPengajuanLabel8.setForeground(new java.awt.Color(245, 255, 251));
-        subjudulPengajuanLabel8.setText("Status : Ajuan ditolak pembina");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(judulDashboardLabel3)
-                    .addComponent(subjudulPengajuanLabel7)
-                    .addComponent(subjudulPengajuanLabel8))
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(judulDashboardLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subjudulPengajuanLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(judulDashboardLabel)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -249,58 +94,31 @@ public class KalenderPanel extends javax.swing.JPanel {
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(loginLabel)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(loginLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel judulDashboardLabel;
-    private javax.swing.JLabel judulDashboardLabel1;
-    private javax.swing.JLabel judulDashboardLabel2;
-    private javax.swing.JLabel judulDashboardLabel3;
     private javax.swing.JLabel loginLabel;
-    private javax.swing.JLabel subjudulPengajuanLabel1;
-    private javax.swing.JLabel subjudulPengajuanLabel2;
-    private javax.swing.JLabel subjudulPengajuanLabel3;
-    private javax.swing.JLabel subjudulPengajuanLabel4;
-    private javax.swing.JLabel subjudulPengajuanLabel5;
-    private javax.swing.JLabel subjudulPengajuanLabel6;
-    private javax.swing.JLabel subjudulPengajuanLabel7;
-    private javax.swing.JLabel subjudulPengajuanLabel8;
     // End of variables declaration//GEN-END:variables
 }
