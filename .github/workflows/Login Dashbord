@@ -1,0 +1,531 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.aulaapp;
+
+/**
+ *
+ * @author User
+ */
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * AulaApp.java
+ *
+ * Tahap 1: Minimal runnable Swing application untuk Sistem Peminjaman Aula Kampus.
+ *
+ * Cara run:
+ * 1. Simpan sebagai AulaApp.java
+ * 2. Kompilasi: javac AulaApp.java
+ * 3. Jalankan:   java AulaApp
+ *
+ * User sample (id - role):
+ * - mhs1 (MAHASISWA)
+ * - ekst1 (EKSTERNAL)
+ * - pemb1 (PEMBINA)
+ * - admin1 (ADMIN)
+ * - pimp1 (PIMPINAN)
+ */
+public class AulaApp {
+
+    // ---------- Models ----------
+    static abstract class User {
+        String id;
+        String name;
+        Role role;
+        public User(String id, String name, Role role) { this.id = id; this.name = name; this.role = role; }
+        @Override public String toString(){ return name + " ("+id+")"; }
+    }
+    static class Mahasiswa extends User { public Mahasiswa(String id, String name){ super(id,name,Role.MAHASISWA);} }
+    static class PihakEksternal extends User { public PihakEksternal(String id, String name){ super(id,name,Role.EKSTERNAL);} }
+    static class Pembina extends User { public Pembina(String id, String name){ super(id,name,Role.PEMBINA);} }
+    static class Admin extends User { public Admin(String id, String name){ super(id,name,Role.ADMIN);} }
+    static class Pimpinan extends User { public Pimpinan(String id, String name){ super(id,name,Role.PIMPINAN);} }
+
+    enum Role { MAHASISWA, EKSTERNAL, PEMBINA, ADMIN, PIMPINAN }
+
+    static class Aula {
+        String id;
+        String nama;
+        String lokasi;
+        public Aula(String id, String nama, String lokasi){ this.id=id; this.nama=nama; this.lokasi=lokasi;}
+        @Override public String toString(){ return nama + " - " + lokasi; }
+    }
+
+    enum StatusPeminjaman {
+        DIAJUKAN,
+        MENUNGGU_VERIFIKASI_PEMBINA,
+        DISETUJUI_PEMBINA,
+        DITOLAK_PEMBINA,
+        MENUNGGU_APPROVAL_ADMIN,
+        DISETUJUI_ADMIN,
+        DITOLAK_ADMIN,
+        DIBATALKAN
+    }
+
+    static class Peminjaman {
+        String id;
+        User peminjam;
+        Aula aula;
+        String tanggal; // untuk tahap awal: string sederhana "YYYY-MM-DD"
+        String keperluan;
+        StatusPeminjaman status;
+        String suratIzin; // filepath (belum terpakai di tahap 1)
+        Date createdAt;
+
+        public Peminjaman(String id, User peminjam, Aula aula, String tanggal, String keperluan, String suratIzin) {
+            this.id = id; this.peminjam=peminjam; this.aula=aula; this.tanggal=tanggal; this.keperluan=keperluan;
+            this.status = StatusPeminjaman.DIAJUKAN;
+            this.suratIzin = suratIzin;
+            this.createdAt = new Date();
+        }
+    }
+
+    // ---------- Repositories (in-memory) ----------
+    static class UserRepository {
+        List<User> users = new ArrayList<>();
+        public void add(User u){ users.add(u); }
+        public User findById(String id){ return users.stream().filter(u->u.id.equals(id)).findFirst().orElse(null); }
+        public List<User> all(){ return users; }
+    }
+
+    static class AulaRepository {
+        List<Aula> aulas = new ArrayList<>();
+        public void add(Aula a){ aulas.add(a); }
+        public List<Aula> all(){ return aulas; }
+        public Aula findById(String id){ return aulas.stream().filter(a->a.id.equals(id)).findFirst().orElse(null); }
+    }
+
+    static class PeminjamanRepository {
+        List<Peminjaman> data = new ArrayList<>();
+        public void save(Peminjaman p){ data.add(p); }
+        public Peminjaman findById(String id){ return data.stream().filter(x->x.id.equals(id)).findFirst().orElse(null); }
+        public List<Peminjaman> all(){ return data; }
+        public List<Peminjaman> findByUser(User u){ return data.stream().filter(p->p.peminjam.id.equals(u.id)).collect(Collectors.toList()); }
+        public List<Peminjaman> findByStatus(StatusPeminjaman s){ return data.stream().filter(p->p.status==s).collect(Collectors.toList()); }
+    }
+
+    // ---------- Service ----------
+    static class AuthService {
+        UserRepository userRepo;
+        public AuthService(UserRepository ur){ this.userRepo = ur; }
+        public User login(String id, String pwd){
+            // NOTE: pwd ignored for simplicity in tahap 1
+            return userRepo.findById(id);
+        }
+    }
+
+    static class PeminjamanService {
+        PeminjamanRepository repo;
+        public PeminjamanService(PeminjamanRepository r){ this.repo = r; }
+
+        public Peminjaman ajukan(User user, Aula aula, String tanggal, String keperluan, String suratIzin){
+            String id = "P" + (repo.all().size()+1);
+            Peminjaman p = new Peminjaman(id, user, aula, tanggal, keperluan, suratIzin);
+            // initial status remains DIAJUKAN
+            repo.save(p);
+            return p;
+        }
+
+        public void batalkan(String peminjamanId){
+            Peminjaman p = repo.findById(peminjamanId);
+            if(p!=null) p.status = StatusPeminjaman.DIBATALKAN;
+        }
+    }
+
+    static class ApprovalService {
+        PeminjamanRepository repo;
+        public ApprovalService(PeminjamanRepository r){ this.repo = r; }
+
+        // Pembina approves -> DISETUJUI_PEMBINA then waiting admin
+        public void pembinaApprove(String id){
+            Peminjaman p = repo.findById(id);
+            if(p!=null && (p.status==StatusPeminjaman.DIAJUKAN || p.status==StatusPeminjaman.MENUNGGU_VERIFIKASI_PEMBINA)){
+                p.status = StatusPeminjaman.DISETUJUI_PEMBINA;
+            }
+        }
+        public void pembinaReject(String id){
+            Peminjaman p = repo.findById(id);
+            if(p!=null) p.status = StatusPeminjaman.DITOLAK_PEMBINA;
+        }
+
+        // Admin final approval
+        public void adminApprove(String id){
+            Peminjaman p = repo.findById(id);
+            if(p!=null && p.status==StatusPeminjaman.DISETUJUI_PEMBINA){
+                p.status = StatusPeminjaman.DISETUJUI_ADMIN;
+            }
+        }
+        public void adminReject(String id){
+            Peminjaman p = repo.findById(id);
+            if(p!=null) p.status = StatusPeminjaman.DITOLAK_ADMIN;
+        }
+    }
+
+    // ---------- GUI ----------
+    static class LoginFrame extends JFrame {
+        AuthService auth;
+        UserRepository userRepo;
+        AulaRepository aulaRepo;
+        PeminjamanRepository pemRepo;
+        PeminjamanService pemService;
+        ApprovalService approvalService;
+
+        public LoginFrame(AuthService auth, UserRepository ur, AulaRepository ar, PeminjamanRepository pr, PeminjamanService ps, ApprovalService as){
+            super("Login - Sistem Peminjaman Aula");
+            this.auth = auth; this.userRepo = ur; this.aulaRepo = ar; this.pemRepo = pr; this.pemService = ps; this.approvalService = as;
+            init();
+        }
+
+        private void init(){
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(380,220);
+            setLocationRelativeTo(null);
+
+            JPanel p = new JPanel(new GridLayout(4,2,5,5));
+            JLabel lId = new JLabel("User ID:");
+            JTextField tfId = new JTextField();
+            JLabel lPwd = new JLabel("Password:");
+            JPasswordField tfPwd = new JPasswordField();
+            JButton btnLogin = new JButton("Login");
+            JButton btnExit = new JButton("Exit");
+
+            p.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            p.add(lId); p.add(tfId);
+            p.add(lPwd); p.add(tfPwd);
+            p.add(new JLabel()); p.add(new JLabel());
+            p.add(btnLogin); p.add(btnExit);
+
+            add(p);
+
+            btnLogin.addActionListener(e -> {
+                String id = tfId.getText().trim();
+                String pwd = new String(tfPwd.getPassword());
+                User u = auth.login(id,pwd);
+                if(u==null){
+                    JOptionPane.showMessageDialog(this, "User tidak ditemukan!", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selamat datang, " + u.name + " ("+u.role+")");
+                    // open dashboard by role
+                    SwingUtilities.invokeLater(() -> {
+                        new DashboardFrame(u, userRepo, aulaRepo, pemRepo, pemService, approvalService).setVisible(true);
+                    });
+                    this.dispose();
+                }
+            });
+
+            btnExit.addActionListener(e -> System.exit(0));
+        }
+    }
+
+    static class DashboardFrame extends JFrame {
+        User user;
+        UserRepository userRepo;
+        AulaRepository aulaRepo;
+        PeminjamanRepository pemRepo;
+        PeminjamanService pemService;
+        ApprovalService approvalService;
+
+        public DashboardFrame(User u, UserRepository ur, AulaRepository ar, PeminjamanRepository pr, PeminjamanService ps, ApprovalService as){
+            super("Dashboard - " + u.name + " ("+u.role+")");
+            this.user = u; this.userRepo = ur; this.aulaRepo = ar; this.pemRepo = pr; this.pemService = ps; this.approvalService = as;
+            init();
+        }
+
+        private void init(){
+            setSize(800,600);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            // Layout
+            JPanel left = new JPanel();
+            left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
+            left.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            JLabel lbl = new JLabel("<html><h2>Menu</h2></html>");
+            left.add(lbl);
+            left.add(Box.createVerticalStrut(10));
+
+            JButton btnViewAula = new JButton("Lihat Ketersediaan Aula");
+            JButton btnAjukan = new JButton("Ajukan Peminjaman");
+            JButton btnMyRequests = new JButton("Lihat Pengajuan Saya");
+            JButton btnPendingPembina = new JButton("Pending (Pembina)");
+            JButton btnPendingAdmin = new JButton("Pending (Admin)");
+            JButton btnLaporan = new JButton("Laporan (Pimpinan/Admin)");
+            JButton btnLogout = new JButton("Logout");
+
+            left.add(btnViewAula);
+            left.add(Box.createVerticalStrut(6));
+            left.add(btnAjukan);
+            left.add(Box.createVerticalStrut(6));
+            left.add(btnMyRequests);
+            left.add(Box.createVerticalStrut(6));
+            if(user.role == Role.PEMBINA) left.add(btnPendingPembina);
+            if(user.role == Role.ADMIN) left.add(btnPendingAdmin);
+            if(user.role == Role.ADMIN || user.role == Role.PIMPINAN) left.add(btnLaporan);
+            left.add(Box.createVerticalStrut(20));
+            left.add(btnLogout);
+
+            JPanel main = new JPanel(new BorderLayout());
+            main.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            JLabel welcome = new JLabel("Selamat datang, " + user.name + " - " + user.role);
+            main.add(welcome, BorderLayout.NORTH);
+
+            // content area: we'll swap panels inside
+            JPanel content = new JPanel(new BorderLayout());
+            main.add(content, BorderLayout.CENTER);
+
+            add(left, BorderLayout.WEST);
+            add(main, BorderLayout.CENTER);
+
+            // Actions
+            btnViewAula.addActionListener(e -> showAulaList(content));
+            btnAjukan.addActionListener(e -> showAjukanForm(content));
+            btnMyRequests.addActionListener(e -> showMyRequests(content));
+            btnPendingPembina.addActionListener(e -> showPendingPembina(content));
+            btnPendingAdmin.addActionListener(e -> showPendingAdmin(content));
+            btnLaporan.addActionListener(e -> showLaporan(content));
+            btnLogout.addActionListener(e -> {
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        new LoginFrame(new AuthService(userRepo), userRepo, aulaRepo, pemRepo, pemService, approvalService).setVisible(true);
+                    } catch(Exception ex){ ex.printStackTrace(); }
+                });
+                this.dispose();
+            });
+
+            // default content
+            showAulaList(content);
+        }
+
+        private void showAulaList(JPanel content){
+            content.removeAll();
+            String[] columns = {"ID","Nama Aula","Lokasi"};
+            DefaultTableModel model = new DefaultTableModel(columns,0);
+            for(Aula a : aulaRepo.all()){
+                model.addRow(new Object[]{a.id, a.nama, a.lokasi});
+            }
+            JTable table = new JTable(model);
+            content.add(new JScrollPane(table), BorderLayout.CENTER);
+            content.revalidate(); content.repaint();
+        }
+
+        private void showAjukanForm(JPanel content){
+            content.removeAll();
+            JPanel form = new JPanel(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+            c.insets = new Insets(5,5,5,5);
+            c.anchor = GridBagConstraints.WEST;
+
+            c.gridx=0; c.gridy=0; form.add(new JLabel("Pilih Aula:"), c);
+            c.gridx=1;
+            JComboBox<Aula> cbAula = new JComboBox<>();
+            aulaRepo.all().forEach(cbAula::addItem);
+            form.add(cbAula, c);
+
+            c.gridx=0; c.gridy=1; form.add(new JLabel("Tanggal (YYYY-MM-DD):"), c);
+            c.gridx=1; JTextField tfTanggal = new JTextField(15); form.add(tfTanggal, c);
+
+            c.gridx=0; c.gridy=2; form.add(new JLabel("Keperluan:"), c);
+            c.gridx=1; JTextField tfKeperluan = new JTextField(20); form.add(tfKeperluan, c);
+
+            c.gridx=0; c.gridy=3; form.add(new JLabel("Surat Izin (opsional):"), c);
+            c.gridx=1; JTextField tfSurat = new JTextField(20); form.add(tfSurat, c);
+
+            c.gridx=0; c.gridy=4; JButton btnSubmit = new JButton("Ajukan"); form.add(btnSubmit, c);
+            c.gridx=1; JButton btnClear = new JButton("Clear"); form.add(btnClear, c);
+
+            content.add(form, BorderLayout.NORTH);
+            content.revalidate(); content.repaint();
+
+            btnSubmit.addActionListener(e->{
+                Aula selected = (Aula) cbAula.getSelectedItem();
+                String tanggal = tfTanggal.getText().trim();
+                String kep = tfKeperluan.getText().trim();
+                String surat = tfSurat.getText().trim();
+                if(selected==null || tanggal.isEmpty() || kep.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Isi semua field yang wajib!", "Form kosong", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                Peminjaman p = pemService.ajukan(user, selected, tanggal, kep, surat);
+                JOptionPane.showMessageDialog(this, "Pengajuan berhasil dibuat. ID: " + p.id);
+                tfTanggal.setText(""); tfKeperluan.setText(""); tfSurat.setText("");
+            });
+
+            btnClear.addActionListener(e->{ tfTanggal.setText(""); tfKeperluan.setText(""); tfSurat.setText(""); });
+        }
+
+        private void showMyRequests(JPanel content){
+            content.removeAll();
+            String[] cols = {"ID","Aula","Tanggal","Keperluan","Status","Aksi"};
+            DefaultTableModel model = new DefaultTableModel(cols,0){
+                @Override public boolean isCellEditable(int r,int c){ return false; }
+            };
+            List<Peminjaman> my = pemRepo.findByUser(user);
+            for(Peminjaman p: my){
+                model.addRow(new Object[]{p.id, p.aula.nama, p.tanggal, p.keperluan, p.status.name(), "—"});
+            }
+            JTable table = new JTable(model);
+            content.add(new JScrollPane(table), BorderLayout.CENTER);
+
+            // Add cancel button below to cancel selected
+            JPanel bottom = new JPanel();
+            JButton btnCancel = new JButton("Batalkan Pengajuan Terpilih");
+            bottom.add(btnCancel);
+            content.add(bottom, BorderLayout.SOUTH);
+
+            btnCancel.addActionListener(e->{
+                int sel = table.getSelectedRow();
+                if(sel<0){ JOptionPane.showMessageDialog(this,"Pilih baris dulu"); return; }
+                String pid = (String) model.getValueAt(sel,0);
+                Peminjaman p = pemRepo.findById(pid);
+                if(p==null){ JOptionPane.showMessageDialog(this,"Data tidak ditemukan"); return; }
+                if(p.status==StatusPeminjaman.DIAJUKAN || p.status==StatusPeminjaman.DISETUJUI_PEMBINA || p.status==StatusPeminjaman.MENUNGGU_APPROVAL_ADMIN){
+                    pemService.batalkan(pid);
+                    JOptionPane.showMessageDialog(this,"Pengajuan dibatalkan");
+                    showMyRequests(content);
+                } else {
+                    JOptionPane.showMessageDialog(this,"Tidak bisa dibatalkan (status: " + p.status + ")");
+                }
+            });
+
+            content.revalidate(); content.repaint();
+        }
+
+        private void showPendingPembina(JPanel content){
+            content.removeAll();
+            String[] cols = {"ID","Peminjam","Aula","Tanggal","Keperluan","Status"};
+            DefaultTableModel model = new DefaultTableModel(cols,0);
+            // Pembina sees DIAJUKAN status
+            List<Peminjaman> pending = pemRepo.findByStatus(StatusPeminjaman.DIAJUKAN);
+            for(Peminjaman p: pending){
+                model.addRow(new Object[]{p.id, p.peminjam.name, p.aula.nama, p.tanggal, p.keperluan, p.status.name()});
+            }
+            JTable table = new JTable(model);
+            content.add(new JScrollPane(table), BorderLayout.CENTER);
+
+            JPanel bottom = new JPanel();
+            JButton btnApprove = new JButton("Setujui");
+            JButton btnReject = new JButton("Tolak");
+            bottom.add(btnApprove); bottom.add(btnReject);
+            content.add(bottom, BorderLayout.SOUTH);
+
+            btnApprove.addActionListener(e->{
+                int sel = table.getSelectedRow();
+                if(sel<0){ JOptionPane.showMessageDialog(this,"Pilih baris dulu"); return; }
+                String pid = (String) model.getValueAt(sel,0);
+                approvalService.pembinaApprove(pid);
+                JOptionPane.showMessageDialog(this,"Ditetapkan: DISETUJUI_PEMBINA");
+                showPendingPembina(content);
+            });
+            btnReject.addActionListener(e->{
+                int sel = table.getSelectedRow();
+                if(sel<0){ JOptionPane.showMessageDialog(this,"Pilih baris dulu"); return; }
+                String pid = (String) model.getValueAt(sel,0);
+                approvalService.pembinaReject(pid);
+                JOptionPane.showMessageDialog(this,"Ditetapkan: DITOLAK_PEMBINA");
+                showPendingPembina(content);
+            });
+
+            content.revalidate(); content.repaint();
+        }
+
+        private void showPendingAdmin(JPanel content){
+            content.removeAll();
+            String[] cols = {"ID","Peminjam","Aula","Tanggal","Keperluan","Status"};
+            DefaultTableModel model = new DefaultTableModel(cols,0);
+            // Admin sees DISETUJUI_PEMBINA items awaiting final admin approval
+            List<Peminjaman> pending = pemRepo.findByStatus(StatusPeminjaman.DISETUJUI_PEMBINA);
+            for(Peminjaman p: pending){
+                model.addRow(new Object[]{p.id, p.peminjam.name, p.aula.nama, p.tanggal, p.keperluan, p.status.name()});
+            }
+            JTable table = new JTable(model);
+            content.add(new JScrollPane(table), BorderLayout.CENTER);
+
+            JPanel bottom = new JPanel();
+            JButton btnApprove = new JButton("Setujui (Final)");
+            JButton btnReject = new JButton("Tolak (Final)");
+            bottom.add(btnApprove); bottom.add(btnReject);
+            content.add(bottom, BorderLayout.SOUTH);
+
+            btnApprove.addActionListener(e->{
+                int sel = table.getSelectedRow();
+                if(sel<0){ JOptionPane.showMessageDialog(this,"Pilih baris dulu"); return; }
+                String pid = (String) model.getValueAt(sel,0);
+                approvalService.adminApprove(pid);
+                JOptionPane.showMessageDialog(this,"Ditetapkan: DISETUJUI_ADMIN");
+                showPendingAdmin(content);
+            });
+            btnReject.addActionListener(e->{
+                int sel = table.getSelectedRow();
+                if(sel<0){ JOptionPane.showMessageDialog(this,"Pilih baris dulu"); return; }
+                String pid = (String) model.getValueAt(sel,0);
+                approvalService.adminReject(pid);
+                JOptionPane.showMessageDialog(this,"Ditetapkan: DITOLAK_ADMIN");
+                showPendingAdmin(content);
+            });
+
+            content.revalidate(); content.repaint();
+        }
+
+        private void showLaporan(JPanel content){
+            content.removeAll();
+            JTextArea ta = new JTextArea();
+            ta.setEditable(false);
+            StringBuilder sb = new StringBuilder();
+            sb.append("Laporan singkat penggunaan aula:\n\n");
+            Map<String, List<Peminjaman>> byAula = pemRepo.all().stream().collect(Collectors.groupingBy(p->p.aula.nama));
+            byAula.forEach((a,list)-> {
+                sb.append("Aula: ").append(a).append("\n");
+                sb.append(" Total pengajuan: ").append(list.size()).append("\n");
+                long approved = list.stream().filter(p->p.status==StatusPeminjaman.DISETUJUI_ADMIN).count();
+                sb.append(" Disetujui (final): ").append(approved).append("\n\n");
+            });
+            ta.setText(sb.toString());
+            content.add(new JScrollPane(ta), BorderLayout.CENTER);
+            content.revalidate(); content.repaint();
+        }
+    }
+
+    // ---------- Main: setup sample data & launch ----------
+    public static void main(String[] args){
+        // create repos & services
+        UserRepository ur = new UserRepository();
+        AulaRepository ar = new AulaRepository();
+        PeminjamanRepository pr = new PeminjamanRepository();
+
+        // sample users
+       ur.add(new Mahasiswa("mahasiswa", "Aflah Sholeh"));
+       ur.add(new PihakEksternal("eksternal", "Perusahaan X"));
+       ur.add(new Pembina("pembina", "Dosen ibuk Novery"));
+       ur.add(new Admin("admin", "Admin Sistem"));
+       ur.add(new Pimpinan("pimpinan", "Rektor"));
+
+        // sample aulas
+        ar.add(new Aula("A1","Aula Utama","Gedung A"));
+        ar.add(new Aula("A2","Aula Serbaguna","Gedung B"));
+        ar.add(new Aula("A3","Ruang Seminar","Gedung C"));
+
+        // services
+        AuthService auth = new AuthService(ur);
+        PeminjamanService pemService = new PeminjamanService(pr);
+        ApprovalService approvalService = new ApprovalService(pr);
+
+        // pre-seed some peminjaman (optional)
+        pr.save(new Peminjaman("P1", ur.findById("mhs1"), ar.findById("A1"), "2025-11-20", "Latihan UKM", ""));
+        pr.findById("P1").status = StatusPeminjaman.DISETUJUI_PEMBINA; // example
+        pr.save(new Peminjaman("P2", ur.findById("ekst1"), ar.findById("A2"), "2025-12-05", "Workshop", ""));
+
+        SwingUtilities.invokeLater(() -> {
+            LoginFrame lf = new LoginFrame(auth, ur, ar, pr, pemService, approvalService);
+            lf.setVisible(true);
+        });
+    }
+}
+
