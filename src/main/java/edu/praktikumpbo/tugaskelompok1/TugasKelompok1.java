@@ -11,6 +11,10 @@ package edu.praktikumpbo.tugaskelompok1;
 public class TugasKelompok1 {
 
     public static void main(String[] args) {
-        System.out.println("tes");
+        java.awt.EventQueue.invokeLater(() -> {
+            SistemFrame frame = new SistemFrame();
+            frame.changeMainPanel(new LoginPagePanel(frame));
+            frame.setVisible(true);
+        });
     }
 }
