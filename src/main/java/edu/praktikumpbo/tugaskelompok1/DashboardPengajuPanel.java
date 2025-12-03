@@ -17,6 +17,10 @@ public class DashboardPengajuPanel extends BasePanel {
     public DashboardPengajuPanel(SistemFrame frame) {
         super(frame);
         initComponents();
+        
+        if (parentFrame != null) {
+        parentFrame.setBackButtonVisible(false);
+    }
     }
 
     /**
@@ -29,14 +33,18 @@ public class DashboardPengajuPanel extends BasePanel {
     private void initComponents() {
 
         loginLabel = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new RoundedPanel(30, 30);
         judulDashboardLabel = new javax.swing.JLabel();
         subjudulPengajuanLabel = new javax.swing.JLabel();
         subjudulPengajuanLabel1 = new javax.swing.JLabel();
         subjudulPengajuanLabel2 = new javax.swing.JLabel();
-        buatAjuanButton = new javax.swing.JButton();
-        lihatRiwayatButton = new javax.swing.JButton();
-        lihatKalenderButton = new javax.swing.JButton();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        buatAjuanButton = new RoundedButton("Buat Ajuan", 30, 30);
+        lihatRiwayatButton = new RoundedButton("Lihat Riwayat Ajuan", 30, 30);
+        lihatKalenderButton = new RoundedButton("Lihat Kalender", 30, 30);
 
         setBackground(new java.awt.Color(245, 255, 251));
 
@@ -67,6 +75,26 @@ public class DashboardPengajuPanel extends BasePanel {
         subjudulPengajuanLabel2.setForeground(new java.awt.Color(245, 255, 251));
         subjudulPengajuanLabel2.setText("Aula X");
 
+        jProgressBar1.setBackground(new java.awt.Color(245, 255, 251));
+        jProgressBar1.setForeground(new java.awt.Color(188, 237, 90));
+        jProgressBar1.setValue(50);
+        jProgressBar1.setString("50%");
+
+        jLabel2.setBackground(new java.awt.Color(245, 255, 251));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(245, 255, 251));
+        jLabel2.setText("Ajuan Dibuat");
+
+        jLabel3.setBackground(new java.awt.Color(245, 255, 251));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(245, 255, 251));
+        jLabel3.setText("Ajuan Diterima Pembina");
+
+        jLabel4.setBackground(new java.awt.Color(245, 255, 251));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(245, 255, 251));
+        jLabel4.setText("Ajuan Diterima Admin");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -74,11 +102,24 @@ public class DashboardPengajuPanel extends BasePanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(judulDashboardLabel)
-                    .addComponent(subjudulPengajuanLabel)
-                    .addComponent(subjudulPengajuanLabel1)
-                    .addComponent(subjudulPengajuanLabel2))
-                .addContainerGap(51, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(judulDashboardLabel)
+                            .addComponent(subjudulPengajuanLabel)
+                            .addComponent(subjudulPengajuanLabel1)
+                            .addComponent(subjudulPengajuanLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +132,14 @@ public class DashboardPengajuPanel extends BasePanel {
                 .addComponent(subjudulPengajuanLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(subjudulPengajuanLabel2)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         buatAjuanButton.setBackground(new java.awt.Color(188, 237, 90));
@@ -138,7 +186,7 @@ public class DashboardPengajuPanel extends BasePanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(10, 10, 10)
                 .addComponent(loginLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -147,7 +195,7 @@ public class DashboardPengajuPanel extends BasePanel {
                     .addComponent(buatAjuanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lihatRiwayatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lihatKalenderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -166,7 +214,11 @@ public class DashboardPengajuPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buatAjuanButton;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel judulDashboardLabel;
     private javax.swing.JButton lihatKalenderButton;
     private javax.swing.JButton lihatRiwayatButton;

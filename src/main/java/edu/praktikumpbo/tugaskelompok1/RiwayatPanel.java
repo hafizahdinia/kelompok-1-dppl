@@ -17,6 +17,13 @@ public class RiwayatPanel extends BasePanel {
     public RiwayatPanel(SistemFrame frame) {
         super(frame);
         initComponents();
+        
+        if (parentFrame != null) {
+        parentFrame.setBackButtonVisible(true);
+        parentFrame.setBackButtonAction(e -> 
+            changeMainPanel(new DashboardPengajuPanel(parentFrame))
+        );
+    }
     }
 
     /**
@@ -48,7 +55,6 @@ public class RiwayatPanel extends BasePanel {
         judulDashboardLabel3 = new javax.swing.JLabel();
         subjudulPengajuanLabel7 = new javax.swing.JLabel();
         subjudulPengajuanLabel8 = new javax.swing.JLabel();
-        navigatorPanel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(245, 255, 251));
 
@@ -62,6 +68,7 @@ public class RiwayatPanel extends BasePanel {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Dalam Proses", "Diterima", "Ditolak", "Dibatalkan" }));
 
         riwayat1Panel.setBackground(new java.awt.Color(245, 255, 251));
+        riwayat1Panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(167, 81, 66), 3, true));
         riwayat1Panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         riwayat1Panel.setPreferredSize(new java.awt.Dimension(210, 100));
 
@@ -98,7 +105,7 @@ public class RiwayatPanel extends BasePanel {
                             .addComponent(judulDashboardLabel)
                             .addComponent(subjudulPengajuanLabel1)
                             .addComponent(subjudulPengajuanLabel2))
-                        .addGap(0, 50, Short.MAX_VALUE)))
+                        .addGap(0, 46, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         riwayat1PanelLayout.setVerticalGroup(
@@ -110,7 +117,7 @@ public class RiwayatPanel extends BasePanel {
                 .addComponent(subjudulPengajuanLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(subjudulPengajuanLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(batalkanButton)
                 .addContainerGap())
         );
@@ -244,19 +251,6 @@ public class RiwayatPanel extends BasePanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        navigatorPanel.setBackground(new java.awt.Color(188, 237, 90));
-
-        javax.swing.GroupLayout navigatorPanelLayout = new javax.swing.GroupLayout(navigatorPanel);
-        navigatorPanel.setLayout(navigatorPanelLayout);
-        navigatorPanelLayout.setHorizontalGroup(
-            navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        navigatorPanelLayout.setVerticalGroup(
-            navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 35, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -274,12 +268,10 @@ public class RiwayatPanel extends BasePanel {
                     .addComponent(riwayat3Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(riwayat4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
-            .addComponent(navigatorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(navigatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(loginLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -294,7 +286,7 @@ public class RiwayatPanel extends BasePanel {
                 .addComponent(riwayat3Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(riwayat4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -308,7 +300,6 @@ public class RiwayatPanel extends BasePanel {
     private javax.swing.JLabel judulDashboardLabel2;
     private javax.swing.JLabel judulDashboardLabel3;
     private javax.swing.JLabel loginLabel;
-    private javax.swing.JPanel navigatorPanel;
     private javax.swing.JPanel riwayat1Panel;
     private javax.swing.JPanel riwayat2Panel;
     private javax.swing.JPanel riwayat3Panel;

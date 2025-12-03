@@ -18,6 +18,13 @@ public class KalenderPanel extends BasePanel {
     public KalenderPanel(SistemFrame frame) {
         super(frame);
         initComponents();
+        
+        if (parentFrame != null) {
+        parentFrame.setBackButtonVisible(true);
+        parentFrame.setBackButtonAction(e -> 
+            changeMainPanel(new DashboardPengajuPanel(parentFrame))
+        );
+    }
     }
 
     /**
@@ -35,6 +42,7 @@ public class KalenderPanel extends BasePanel {
         tanggalPanel = new RoundedPanel(20, 20);
         jPanel3 = new javax.swing.JPanel();
         judulDashboardLabel = new javax.swing.JLabel();
+        pilihanAulaComboBox = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(245, 255, 251));
 
@@ -99,8 +107,10 @@ public class KalenderPanel extends BasePanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(judulDashboardLabel)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
+
+        pilihanAulaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Aula", "Aula 1", "Aula 2", "Aula 3", "Aula 4", "Aula 5", "Aula 6" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -112,20 +122,24 @@ public class KalenderPanel extends BasePanel {
                     .addComponent(loginLabel)
                     .addComponent(bulanTahunPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tanggalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pilihanAulaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(10, 10, 10)
                 .addComponent(loginLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pilihanAulaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bulanTahunPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tanggalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -135,6 +149,7 @@ public class KalenderPanel extends BasePanel {
     private javax.swing.JLabel judulDashboardLabel;
     private javax.swing.JLabel judulDashboardLabel1;
     private javax.swing.JLabel loginLabel;
+    private javax.swing.JComboBox<String> pilihanAulaComboBox;
     private javax.swing.JPanel tanggalPanel;
     // End of variables declaration//GEN-END:variables
 }

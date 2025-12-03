@@ -17,6 +17,13 @@ public class FormMahasiswaPanel extends BasePanel {
     public FormMahasiswaPanel(SistemFrame frame) {
         super(frame);
         initComponents();
+        
+        if (parentFrame != null) {
+        parentFrame.setBackButtonVisible(true);
+        parentFrame.setBackButtonAction(e -> 
+            changeMainPanel(new DashboardPengajuPanel(parentFrame))
+        );
+    }
     }
 
     /**
@@ -401,7 +408,7 @@ public class FormMahasiswaPanel extends BasePanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(10, 10, 10)
                 .addComponent(loginLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(judulDashboardLabel)
@@ -475,7 +482,7 @@ public class FormMahasiswaPanel extends BasePanel {
                 .addComponent(jCheckBox4)
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

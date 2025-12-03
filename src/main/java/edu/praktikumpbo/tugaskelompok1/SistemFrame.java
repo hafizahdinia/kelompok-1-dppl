@@ -18,14 +18,123 @@ public class SistemFrame extends javax.swing.JFrame {
      */
     public SistemFrame() {
         initComponents();
+        this.setMinimumSize(new java.awt.Dimension(360,640));
+        mainPanel.setLayout(new java.awt.BorderLayout());
+        this.setSize(360,640);
+        this.setPreferredSize(new java.awt.Dimension(360,640));
+        this.setLocationRelativeTo(null);
+
+        // Setup navigator panel
+        setupNavigatorPanel();
+        navigatorPanel.setVisible(false); // Hidden by default
+    }
+
+    private void setupNavigatorPanel() {
+        navigatorPanel.setLayout(new java.awt.BorderLayout());
+
+        // Back button (initially hidden)
+        javax.swing.JButton backButton = new javax.swing.JButton("←");
+        backButton.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        backButton.setForeground(new java.awt.Color(39, 67, 32));
+        backButton.setBackground(new java.awt.Color(188, 237, 90));
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+        backButton.setPreferredSize(new java.awt.Dimension(50, 35));
+        backButton.setVisible(false);
+        backButton.setName("backButton"); // For easy access
+
+        // Menu button (three dots)
+        javax.swing.JButton menuButton = new javax.swing.JButton("⋯");
+        menuButton.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        menuButton.setForeground(new java.awt.Color(39, 67, 32));
+        menuButton.setBackground(new java.awt.Color(188, 237, 90));
+        menuButton.setBorderPainted(false);
+        menuButton.setFocusPainted(false);
+        menuButton.setPreferredSize(new java.awt.Dimension(50, 35));
+        menuButton.addActionListener(e -> showQuickNavMenu(menuButton));
+
+        navigatorPanel.add(backButton, java.awt.BorderLayout.WEST);
+        navigatorPanel.add(menuButton, java.awt.BorderLayout.EAST);
+    }
+
+    private void showQuickNavMenu(java.awt.Component invoker) {
+        javax.swing.JPopupMenu popupMenu = new javax.swing.JPopupMenu();
+        popupMenu.setBackground(new java.awt.Color(245, 255, 251));
+
+        javax.swing.JMenuItem dashboardItem = new javax.swing.JMenuItem("Dashboard");
+        javax.swing.JMenuItem buatAjuanItem = new javax.swing.JMenuItem("Buat Ajuan");
+        javax.swing.JMenuItem riwayatItem = new javax.swing.JMenuItem("Riwayat Ajuan");
+        javax.swing.JMenuItem kalenderItem = new javax.swing.JMenuItem("Kalender");
+        javax.swing.JMenuItem logoutItem = new javax.swing.JMenuItem("Logout");
+
+        // Style menu items
+        for (javax.swing.JMenuItem item : new javax.swing.JMenuItem[]{
+            dashboardItem, buatAjuanItem, riwayatItem, kalenderItem, logoutItem}) {
+            item.setForeground(new java.awt.Color(39, 67, 32));
+            item.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        }
+
+        dashboardItem.addActionListener(e -> changeMainPanel(new DashboardPengajuPanel(this)));
+        buatAjuanItem.addActionListener(e -> changeMainPanel(new FormMahasiswaPanel(this)));
+        riwayatItem.addActionListener(e -> changeMainPanel(new RiwayatPanel(this)));
+        kalenderItem.addActionListener(e -> changeMainPanel(new KalenderPanel(this)));
+        logoutItem.addActionListener(e -> {
+            changeMainPanel(new LoginPagePanel(this));
+            navigatorPanel.setVisible(false);
+        });
+
+        popupMenu.add(dashboardItem);
+        popupMenu.add(buatAjuanItem);
+        popupMenu.add(riwayatItem);
+        popupMenu.add(kalenderItem);
+        popupMenu.addSeparator();
+        popupMenu.add(logoutItem);
+
+        popupMenu.show(invoker, 0, invoker.getHeight());
+    }
+
+    public void setBackButtonVisible(boolean visible) {
+        for (java.awt.Component comp : navigatorPanel.getComponents()) {
+            if (comp instanceof javax.swing.JButton) {
+                javax.swing.JButton btn = (javax.swing.JButton) comp;
+                if ("backButton".equals(btn.getName())) {
+                    btn.setVisible(visible);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void setBackButtonAction(java.awt.event.ActionListener action) {
+        for (java.awt.Component comp : navigatorPanel.getComponents()) {
+            if (comp instanceof javax.swing.JButton) {
+                javax.swing.JButton btn = (javax.swing.JButton) comp;
+                if ("backButton".equals(btn.getName())) {
+                    // Remove old listeners
+                    for (java.awt.event.ActionListener al : btn.getActionListeners()) {
+                        btn.removeActionListener(al);
+                    }
+                    btn.addActionListener(action);
+                    break;
+                }
+            }
+        }
     }
     
         public void changeMainPanel(javax.swing.JPanel panel){
         mainPanel.removeAll();
-        mainPanel.add(panel);
+        mainPanel.add(panel, java.awt.BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();
 
+    }
+        
+     public void setNavigatorVisible(boolean visible) {
+        navigatorPanel.setVisible(visible);
+}
+
+    public javax.swing.JPanel getNavigatorPanel() {
+        return navigatorPanel;
     }
 
     /**
