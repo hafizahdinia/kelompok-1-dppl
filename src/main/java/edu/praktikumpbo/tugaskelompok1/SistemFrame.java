@@ -123,6 +123,45 @@ public class SistemFrame extends javax.swing.JFrame {
     
         public void changeMainPanel(javax.swing.JPanel panel){
         mainPanel.removeAll();
+        
+        if (panel instanceof FormMahasiswaPanel || panel instanceof FormEksternalPanel) {
+            javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(panel);
+            scrollPane.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.setBorder(null);
+            scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+            // Custom scrollbar appearance
+            scrollPane.getVerticalScrollBar().setBackground(new java.awt.Color(245, 255, 251));
+            scrollPane.getVerticalScrollBar().setUI(new javax.swing.plaf.basic.BasicScrollBarUI() {
+                @Override
+                protected void configureScrollBarColors() {
+                    this.thumbColor = new java.awt.Color(188, 237, 90);
+                    this.trackColor = new java.awt.Color(245, 255, 251);
+                }
+
+                @Override
+                protected javax.swing.JButton createDecreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                @Override
+                protected javax.swing.JButton createIncreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                private javax.swing.JButton createZeroButton() {
+                    javax.swing.JButton button = new javax.swing.JButton();
+                    button.setPreferredSize(new java.awt.Dimension(0, 0));
+                    return button;
+                }
+            });
+
+            mainPanel.add(scrollPane, java.awt.BorderLayout.CENTER);
+        } else {
+            mainPanel.add(panel, java.awt.BorderLayout.CENTER);
+        }
+            
         mainPanel.add(panel, java.awt.BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();

@@ -14,16 +14,53 @@ public class RiwayatPanel extends BasePanel {
     /**
      * Creates new form KalenderPanel
      */
-    public RiwayatPanel(SistemFrame frame) {
+        public RiwayatPanel(SistemFrame frame) {
         super(frame);
         initComponents();
-        
+
+        // Set GridBagLayout untuk center alignment
+        this.setLayout(new java.awt.GridBagLayout());
+        this.removeAll();
+        java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new java.awt.Insets(10, 0, 6, 0);
+        this.add(loginLabel, gbc);
+
+        gbc.gridy = 1;
+        gbc.insets = new java.awt.Insets(0, 0, 12, 0);
+        javax.swing.JPanel comboPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 6, 0));
+        comboPanel.setBackground(new java.awt.Color(245, 255, 251));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(103, 22));
+        jComboBox2.setPreferredSize(new java.awt.Dimension(105, 22));
+        comboPanel.add(jComboBox1);
+        comboPanel.add(jComboBox2);
+        this.add(comboPanel, gbc);
+
+        gbc.gridy = 2;
+        gbc.insets = new java.awt.Insets(0, 0, 12, 0);
+        this.add(riwayat1Panel, gbc);
+
+        gbc.gridy = 3;
+        this.add(riwayat2Panel, gbc);
+
+        gbc.gridy = 4;
+        this.add(riwayat3Panel, gbc);
+
+        gbc.gridy = 5;
+        gbc.insets = new java.awt.Insets(0, 0, 113, 0);
+        this.add(riwayat4Panel, gbc);
+
+        this.setBackground(new java.awt.Color(245, 255, 251));
+        this.revalidate();
+        this.repaint();
+
         if (parentFrame != null) {
-        parentFrame.setBackButtonVisible(true);
-        parentFrame.setBackButtonAction(e -> 
-            changeMainPanel(new DashboardPengajuPanel(parentFrame))
-        );
-    }
+            parentFrame.setBackButtonVisible(true);
+            parentFrame.setBackButtonAction(e -> 
+                changeMainPanel(new DashboardPengajuPanel(parentFrame))
+            );
+        }
     }
 
     /**

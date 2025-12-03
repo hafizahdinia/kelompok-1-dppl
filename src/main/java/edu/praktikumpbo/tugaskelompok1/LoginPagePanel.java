@@ -54,12 +54,12 @@ public class LoginPagePanel extends BasePanel {
         fieldPanel = new RoundedPanel(30, 30);
         emailLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
-        passwordField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
         loginButton = new RoundedButton("Login", 30, 30);
         resetLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         alertLabel = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(188, 237, 90));
         setPreferredSize(new java.awt.Dimension(240, 300));
@@ -82,12 +82,6 @@ public class LoginPagePanel extends BasePanel {
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         passwordLabel.setForeground(new java.awt.Color(39, 67, 32));
         passwordLabel.setText("Password");
-
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
 
         loginButton.setBackground(new java.awt.Color(188, 237, 90));
         loginButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -115,17 +109,17 @@ public class LoginPagePanel extends BasePanel {
         fieldPanel.setLayout(fieldPanelLayout);
         fieldPanelLayout.setHorizontalGroup(
             fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fieldPanelLayout.createSequentialGroup()
+            .addGroup(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(loginButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emailField)
-                    .addGroup(fieldPanelLayout.createSequentialGroup()
+                .addGroup(fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(passwordField)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                    .addComponent(emailField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fieldPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(resetLabel))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, fieldPanelLayout.createSequentialGroup()
+                    .addGroup(fieldPanelLayout.createSequentialGroup()
                         .addGroup(fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordLabel)
                             .addComponent(emailLabel))
@@ -181,10 +175,6 @@ public class LoginPagePanel extends BasePanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String email = emailField.getText();
         String password = passwordField.getText();
@@ -208,7 +198,7 @@ public class LoginPagePanel extends BasePanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel loginLabel;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel resetLabel;
     // End of variables declaration//GEN-END:variables
